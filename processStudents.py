@@ -33,48 +33,54 @@ import csv
 
 # create a file object to open the file in read mode
 
-
+infile = open('students.csv','r')
 
 # create a csv object from the file object
-
+read_csv_file = csv.reader(infile)
 
 #skip the header row
-
+next(read_csv_file)
 
 #create an outfile object for the pocessed record
-
-
+outfile = open('processedStudents.csv','a')
 
 #create a new dictionary named 'student_dict'
-
+student_dict = {}
 
 
 #use a loop to iterate through each row of the file
-
-
+for row in read_csv_file:
+    GPA = float(row[8])
     #check if the GPA is below 3.0. If so, write the record to the outfile
-    
+    if GPA < 3:
+        first_name = row[2]
+        last_name = row[3]
+        stud_id = row[0]
+        major = row[6]
+        classification = row[7]
+        outfile.write(f"{stud_id},{first_name.title()},{last_name.title()},{major},{classification},{GPA} \n")
         
 
 
 
     # append the record to the dictionary with the student Full name in proper case 
     # as the Key and the value as the GPA
-    
+        full_name = first_name.title() + ' ' + last_name.title()
+        student_dict[full_name] = row[8]
 
 
 
 
 
 #print the entire dictionary
-
+print(student_dict)
 
 #Print the corresponding GPA for student 'Luke Brazzi'
-
+print(student_dict['Luke Brazzi'])
 
 
 #close the outfile
-
+outfile.close()
 
 
 
